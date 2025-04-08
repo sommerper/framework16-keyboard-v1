@@ -17,7 +17,7 @@ Any Pro Micro compatible controller should work. The nice!nano v2 is used in the
 - Bottom is for your desk so you can choose to put the pcb on your desk as well. It's possible to fit this on the build plate of a standard Prusa mk3s if you put it diagonally.
 - Top is for travel protection. It fits on top of the Bottom case with the keyboard inside.
 
-![Desktop print](images/framework16keyboardv1_4.jpg)
+![Desk print](images/framework16keyboardv1_4.jpg)
 
 ## ⚠️ Disclaimer
 
