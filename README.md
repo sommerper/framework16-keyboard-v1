@@ -8,7 +8,7 @@ It's using Kaihl Choc switches and the case has an angle of 5 degrees so it will
 
 ## ZMK and QMK
 
-There some settings for zmk and qmk to get you started with the correct pin layout.
+There some settings for zmk and qmk to get you started with the correct pin layout. The ZMK config is based on [Urob's config](https://github.com/urob/zmk-config)
 
 Any Pro Micro compatible controller should work. The nice!nano v2 is used in the image, and I have also connected an RP2040 without any problems. 
 
