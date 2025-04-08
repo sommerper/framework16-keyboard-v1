@@ -1,0 +1,79 @@
+{
+  "keyboard_name": "Framework 16 Keyboard v1",
+  "manufacturer": "Phero",
+  "url": "",
+  "maintainer": "qmk",
+  "features": {
+    "bootmagic": true,
+    "extrakey": true,
+    "mousekey": true,
+    "nkro": true
+  },
+  "usb": {
+    "vid": "0x4354",
+    "pid": "0x0001",
+    "device_version": "0.0.1"
+  },
+  "processor": "atmega32u4",
+  "bootloader": "caterina",
+  "diode_direction": "COL2ROW",
+  "matrix_pins": {
+    "cols": ["E6", "B4", "B5", "B6", "B2", "B1"],
+    "rows": ["D3", "F4", "D2", "F5", "D4", "F6", "C6", "F7"]
+  },
+  "community_layouts": ["framework"],
+  "layouts": {
+    "LAYOUT_framework": {
+      "layout": [
+        {"label": "Q", "matrix": [0, 0], "x": 1, "y": 0.9},
+        {"label": "W", "matrix": [0, 1], "x": 2, "y": 0.6},
+        {"label": "E", "matrix": [0, 2], "x": 3, "y": 0.3},
+        {"label": "R", "matrix": [0, 3], "x": 4, "y": 0.3},
+        {"label": "T", "matrix": [0, 4], "x": 5, "y": 0.6},
+
+        {"label": "Y", "matrix": [1, 4], "x": 7, "y": 0.6},
+        {"label": "U", "matrix": [1, 3], "x": 8, "y": 0.3},
+        {"label": "I", "matrix": [1, 2], "x": 9, "y": 0.3},
+        {"label": "O", "matrix": [1, 1], "x": 10, "y": 0.6},
+        {"label": "P", "matrix": [1, 0], "x": 11, "y": 0.9},
+
+        {"label": "Q", "matrix": [2, 0], "x": 1, "y": 1.9},
+        {"label": "W", "matrix": [2, 1], "x": 2, "y": 1.6},
+        {"label": "E", "matrix": [2, 2], "x": 3, "y": 1.3},
+        {"label": "R", "matrix": [2, 3], "x": 4, "y": 1.3},
+        {"label": "T", "matrix": [2, 4], "x": 5, "y": 1.6},
+
+        {"label": "Y", "matrix": [3, 4], "x": 7, "y": 1.6},
+        {"label": "U", "matrix": [3, 3], "x": 8, "y": 1.3},
+        {"label": "I", "matrix": [3, 2], "x": 9, "y": 1.3},
+        {"label": "O", "matrix": [3, 1], "x": 10, "y": 1.6},
+        {"label": "P", "matrix": [3, 0], "x": 11, "y": 1.9},
+
+        {"label": "Q", "matrix": [4, 0], "x": 1, "y": 2.9},
+        {"label": "W", "matrix": [4, 1], "x": 2, "y": 2.6},
+        {"label": "E", "matrix": [4, 2], "x": 3, "y": 2.3},
+        {"label": "R", "matrix": [4, 3], "x": 4, "y": 2.3},
+        {"label": "T", "matrix": [4, 4], "x": 5, "y": 2.6},
+
+        {"label": "Y", "matrix": [5, 4], "x": 7, "y": 2.6},
+        {"label": "U", "matrix": [5, 3], "x": 8, "y": 2.3},
+        {"label": "I", "matrix": [5, 2], "x": 9, "y": 2.3},
+        {"label": "O", "matrix": [5, 1], "x": 10, "y": 2.6},
+        {"label": "P", "matrix": [5, 0], "x": 11, "y": 2.9},
+
+        {"label": "W", "matrix": [6, 1], "x": 2, "y": 3},
+        {"label": "E", "matrix": [6, 2], "x": 3, "y": 3},
+        {"label": "R", "matrix": [6, 3], "x": 3, "y": 3.8},
+        {"label": "T", "matrix": [6, 4], "x": 4, "y": 4},
+
+        {"label": "Y", "matrix": [7, 4], "x": 6, "y": 3},
+        {"label": "U", "matrix": [7, 3], "x": 7, "y": 3},
+        {"label": "I", "matrix": [7, 2], "x": 8, "y": 3},
+        {"label": "O", "matrix": [7, 1], "x": 9, "y": 3},
+
+        {"label": "Q", "matrix": [6, 5], "x": 5, "y": 4.2},
+        {"label": "W", "matrix": [7, 5], "x": 2, "y": 3}
+      ]
+    }
+  }
+}
