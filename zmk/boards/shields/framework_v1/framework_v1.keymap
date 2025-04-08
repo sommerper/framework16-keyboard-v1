@@ -1,0 +1,290 @@
+/*
+ * Copyright (c) 2021 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include "zmk-helpers/helper.h"
+#include "framework_v1.overlay"
+#include "framework_v1_keypos.h"
+
+
+#define BASE      0
+#define LOWER     1
+#define RAISE     2
+
+#define BASEMAC   3
+#define LOWERMAC  4
+#define RAISEMAC  5
+
+#define QUERTY    6
+#define EXTRAS    7
+#define NUMPAD    8
+#define NUMBERS   9
+#define BLUETOOTH 10
+#define LANG      11
+
+// left-hand keys
+#define KEYS_L LN4 LN3 LN2 LN1 LN0 LT4 LT3 LT2 LT1 LT0 LM4 LM3 LM2 LM1 LM0 LB1 LB0
+// right-hand keys
+#define KEYS_R RN0 RN1 RN2 RN3 RN4 RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1
+// left-hand thumb keys
+#define THUMBS_L LH0 LH1 LH2
+// right-hand thumb keys
+#define THUMBS_R RH0 RH1 RH2
+
+/ {
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <LOWER RAISE>;
+            then-layer = <EXTRAS>;
+        };
+        tri_layer_mac {
+            if-layers = <LOWERMAC RAISEMAC>;
+            then-layer = <EXTRAS>;
+        };
+    };
+};
+
+
+#define XXX &none
+#define ___ &trans
+
+#undef COMBO_TERM
+#define COMBO_TERM 18
+
+
+// --------------------------------------------
+// ------------------ COMBOS ------------------
+// --------------------------------------------
+ZMK_COMBO(comboDoubleQuote1, &kp SQT, RM1 RM2, BASE)
+
+
+
+// --------------------------------------------
+// ------------------- HMR --------------------
+// --------------------------------------------
+#define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS) \
+    ZMK_BEHAVIOR(NAME, hold_tap, \
+        flavor = "balanced"; \
+        tapping-term-ms = <280>; \
+        quick-tap-ms = <150>; \
+        bindings = <HOLD>, <TAP>; \
+        hold-trigger-key-positions = <TRIGGER_POS>; \
+        hold-trigger-on-release; \
+        hold-while-undecided; \
+    )
+
+// left-hand HRMs
+MAKE_HRM(hml, &kp, &kp, THUMBS_L THUMBS_R KEYS_R)
+// right-hand HRMs
+MAKE_HRM(hmr, &kp, &kp, THUMBS_L THUMBS_R KEYS_L)
+
+
+// --------------------------------------------
+// ----------------- TOGGLES ------------------
+// --------------------------------------------
+&lt {
+  tapping-term-ms = <280>;
+  quick-tap-ms = <280>; // repeat on tap-into-hold
+  flavor = "balanced";
+};
+  
+&mt {
+  tapping-term-ms = <280>;
+  quick-tap-ms = <280>; // repeat on tap-into-hold
+  flavor = "balanced";
+};
+
+// --------------------------------------------
+// --------------- BEHAVIOURS -----------------
+// --------------------------------------------
+
+ZMK_BEHAVIOR(alt_dot, hold_tap,
+  flavor = "balanced";
+  tapping-term-ms = <200>;
+  bindings = <&kp>, <&alt_morph>;
+  hold-while-undecided;
+)
+ZMK_BEHAVIOR(alt_morph, mod_morph,
+  bindings = <&kp DOT>, <&kp COMMA>;
+  mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+// ----------------------------
+ZMK_BEHAVIOR(alt_sqt, hold_tap,
+  flavor = "balanced";
+  tapping-term-ms = <200>;
+  bindings = <&kp>, <&alt_morph_sqt>;
+)
+
+ZMK_BEHAVIOR(alt_morph_sqt, mod_morph,
+  bindings = <&kp SQT>, <&kp COMMA>;
+  mods = <(MOD_LSFT|MOD_RSFT)>;
+)
+
+ZMK_BEHAVIOR(copy_cut, tap_dance,
+  tapping-term-ms = <200>;
+  bindings = <&kp LC(INS)>, <&kp LC(X)>;
+)
+
+ZMK_BEHAVIOR(copy_cut_mac, tap_dance,
+  tapping-term-ms = <200>;
+  bindings = <&kp LG(C)>, <&kp LG(X)>;
+)
+
+
+// --------------------------------------------
+// ----------------- MACROS -------------------
+// --------------------------------------------
+ZMK_BEHAVIOR(qu_macro, macro,
+  wait-ms = <0>;
+  tap-ms = <5>;
+  bindings = <&kp Q>, <&kp U>;
+)
+ZMK_BEHAVIOR(qui_macro, macro,
+  wait-ms = <0>;
+  tap-ms = <5>;
+  bindings = <&kp Q>, <&kp U>, <&kp I>;
+)
+ZMK_BEHAVIOR(sch_macro, macro,
+  wait-ms = <0>;
+  tap-ms = <5>;
+  bindings = <&kp S>, <&kp C>, <&kp H>;
+)
+
+// -------------------------------------------------------------------
+// Linux
+// -------------------------------------------------------------------
+// / {
+//   keymap {
+//       compatible = "zmk,keymap";
+
+//       base_layer {
+//           bindings = <  
+//           &kp TILDE &kp C     &kp L     &kp D     &kp K                     &kp J     &kp F     &kp O     &kp U     &kp SEMI
+//           &kp R     &kp S     &kp T     &kp H     &kp G                     &kp M     &kp N     &kp E     &kp I     &kp A
+//           &kp Q     &kp W     &kp V     &kp B     &kp SQT                   &kp COLON &kp P     &kp X     &kp Y     &kp Z
+//                     &kp GRAVE &kp DQT                                                           &kp COMMA &kp DOT   
+//                               &mt LALT TAB &kp HASH  &kp DOLLAR          &kp LT     &kp SLASH     &kp GT
+  
+                               
+//           >;
+//       };
+//   };
+// };
+
+
+ZMK_LAYER(base,
+  &kp HASH      &kp C           &kp L           &kp D         &kp K                                             &kp J            &kp F         &kp O         &kp U         &kp SEMI
+  &kp R         &hml LGUI S     &hml LCTRL T    &hml LSHIFT H &kp G                                             &kp M            &hmr RSHIFT N &hmr RCTRL E  &hmr RGUI I   &kp A
+  &kp Q         &kp W           &kp V           &lt NUMPAD B  &kp SQT                                           &kp COLON        &kp P         &kp X         &kp Y         &kp Z
+                &kp GRAVE       &kp DQT                                                                                                        &kp COMMA     &kp DOT
+                                &mt LALT TAB    &lt LOWER BSPC  &lt NUMBERS ESC              &lt LANG RET   &lt RAISE SPC     &alt_sqt RALT 0
+)
+
+ZMK_LAYER(lower,
+  &tog BASEMAC  &kp K_VOL_DN    &kp K_MUTE      &kp K_VOL_UP  &kp LC(BSPC)                                      XXX              &kp HOME      XXX           &kp END       XXX
+  &caps_word    &kp LGUI        &kp LCTRL       &kp LSHIFT    &kp BSPC                                          XXX              &kp LEFT      &kp UP        &kp RIGHT     XXX
+  &kp LC(Z)     XXX             &copy_cut       &kp LS(INS)   &kp DEL                                           XXX              &kp PG_UP     &kp DOWN      &kp PG_DN     &kp LC(SLASH)
+                ___           ___                                                                                                            ___           ___
+                                              ___           ___         ___                  ___        &lt RAISE MINUS         ___
+)
+
+ZMK_LAYER(raise,
+  XXX           &kp AT          &kp HASH        &kp DOLLAR    &kp PERCENT                                         XXX           &kp AMPS      &kp LPAR      &kp RPAR      XXX
+  &kp BACKSLASH &kp LT          &kp SLASH       &kp GT        &kp QMARK                                           XXX           &kp PIPE      &kp LBRC      &kp RBRC      &kp CARET
+  &kp EXCL      &kp TILDE       &kp MINUS       &kp DOT       XXX                                                 &kp SEMI      &kp ASTERISK  &kp LBKT      &kp RBKT      &kp EQUAL
+           ___           ___                                                                                                         ___           ___
+                                      ___    &lt LOWER UNDERSCORE     ___                    ___         ___         &kp EQUAL
+)
+
+// -------------------------------------------------------------------
+// Linux end
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+// Mac start
+// -------------------------------------------------------------------
+
+ZMK_LAYER(basemac,
+  &kp M         &kp C          &kp L           &kp D         &kp K                                                        &kp J            &kp F         &kp O         &kp U         &kp SEMI
+  &kp R         &hml LGUI S    &hml LCTRL T    &hml LSHIFT H &kp G                                                        &kp M            &hmr RSHIFT N &hmr RCTRL E  &hmr RGUI I   &kp A
+  &kp Q         &kp W          &kp V           &lt NUMPAD B  &kp SQT                                                      &kp COLON        &kp P         &kp X         &kp Y         &kp Z
+                &kp GRAVE      &kp DQT                                                                                                        &kp COMMA     &kp DOT
+                                               &mt LALT TAB  &lt LOWERMAC BSPC  &lt NUMBERS ESC     &lt LANG RET   &lt RAISEMAC SPC &alt_sqt RALT 0
+
+)
+
+ZMK_LAYER(lowermac,
+  &tog BASE     &kp K_VOL_DN   &kp K_MUTE      &kp K_VOL_UP  &kp LG(BSPC)                                      &kp HOME         &kp LG(LEFT)  XXX           &kp LG(RIGHT) &kp END
+  XXX           &kp LGUI       &kp LCTRL       &kp LSHIFT    &kp BSPC                                          XXX              &kp LEFT      &kp UP        &kp RIGHT     &kp RETURN
+  &kp LG(Z)     XXX            &copy_cut_mac   &kp LG(V)     &kp DEL                                           XXX              &kp PG_UP     &kp DOWN      &kp PG_DN     &kp LG(SLASH)
+                    ___           ___                                                                                                            ___           ___
+                                                  ___           ___         ___                     ___        &lt RAISEMAC MINUS         ___
+)
+
+ZMK_LAYER(raisemac,
+  XXX           &kp AT        &kp HASH      &kp DOLLAR    &kp PERCENT                                         XXX           &kp AMPS      &kp LPAR      &kp RPAR      XXX
+  &kp BACKSLASH &kp LT        &kp SLASH     &kp GT        &kp QMARK                                           XXX           &kp PIPE      &kp LBRC      &kp RBRC      &kp CARET
+  &kp EXCL      &kp TILDE     &kp MINUS     &kp DOT       XXX                                                 &kp SEMI      &kp ASTERISK  &kp LBKT      &kp RBKT      &kp EQUAL     
+               ___           ___                                                                                                         ___           ___
+                                          ___    &lt LOWERMAC UNDERSCORE     ___                    ___         ___         ___
+)
+
+// -------------------------------------------------------------------
+// Mac end
+// -------------------------------------------------------------------
+
+ZMK_LAYER(querty,
+  &kp Q         &kp R           &kp E           &kp R         &kp T                                                          &kp Y            &kp U         &kp I         &kp O         &kp P
+  &kp A         &kp S           &kp D           &kp F         &kp G                                                          &kp H            &kp J         &kp K         &kp K         &kp L
+  &kp Z         &kp X           &kp C           &kp V         &kp B                                                          &kp N            &kp N         &kp M         &kp COMMA     &kp DOT
+                                &kp LCTRL      &kp LSHIFT                                                                                                   &kp COMMA     &kp DOT
+                                               &mt LALT TAB  &lt LOWER BSPC  &lt NUMBERS ESC                   &lt LANG RET  &lt RAISE SPC &alt_dot RALT 0
+)
+
+ZMK_LAYER(extras,
+  XXX           XXX           XXX           XXX           XXX                                             &kp F13       &kp F7        &kp F8        &kp F9        &kp F10
+  &mo BLUETOOTH XXX           XXX           XXX           XXX                                             &kp F14       &kp F4        &kp F5        &kp F6        &kp F11
+  XXX           XXX           XXX           XXX           XXX                                             &kp F15       &kp F1        &kp F2        &kp F3        &kp F12
+                ___           ___                                                                                                     ___           ___
+                                              ___         XXX         ___                       ___         XXX         ___
+)
+
+ZMK_LAYER(numpad,
+  XXX           &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  XXX                                             &kp KP_DIVIDE   &kp KP_N7   &kp KP_N8   &kp KP_N9   &kp KP_MINUS
+  XXX           &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  XXX                                             &kp KP_MULTIPLY &kp KP_N4   &kp KP_N5   &kp KP_N6   &kp KP_PLUS
+  &kp NUMBER_0  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  XXX                                             &kp COLON       &kp KP_N1   &kp KP_N2   &kp KP_N3   &kp KP_EQUAL
+                    &kp CAPSLOCK  &kp KP_NUMLOCK                                                                                      &kp COMMA   &kp KP_DOT
+                                                  ___         ___         ___                   ___         &kp KP_N0     &kp KP_DOT
+)
+
+ZMK_LAYER(numbers,
+  &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                                          &kp F6          &kp F7        &kp KP_N8   &kp F9        &kp F10
+  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5                                    &kp NUMBER_6    &kp NUMBER_7  &kp KP_N8   &kp NUMBER_9  &kp NUMBER_0
+  &kp F11       &kp F12       &kp F13       &kp F14       &kp F15                                         &kp F16         &kp F17       &kp KP_N8   &kp F19       &kp F20
+                    ___           ___                                                                                                   ___         ___
+                                                  ___         ___         ___                   ___         ___           ___
+)
+
+ZMK_LAYER(bluetooth,
+  XXX           XXX           XXX           XXX           XXX                                             &sys_reset    XXX           &out OUT_BLE  &out OUT_USB  &bootloader
+  XXX           XXX           XXX           XXX           XXX                                             XXX           &bt BT_SEL 4  &bt BT_SEL 5  XXX           XXX
+  XXX           XXX           XXX           XXX           XXX                                             &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  XXX
+                    XXX           XXX                                                                                                 &bt BT_CLR    XXX
+                                                  XXX         XXX         XXX                   XXX         XXX         XXX
+)
+
+ZMK_LAYER(lang,
+  XXX           &sch_macro    XXX           XXX           XXX                                             XXX           XXX           &kp RA(P)   &kp RA(Y)     XXX
+  &qui_macro    &kp RA(S)     XXX           XXX           XXX                                             XXX           XXX           &kp RA(L)   &kp RA(Z)     &kp RA(Q)
+  &qu_macro     XXX           XXX           XXX           XXX                                             XXX           XXX           XXX         XXX           &kp RA(W)
+                    ___           ___                                                                                                 XXX         XXX
+                                                  ___         XXX         ___                   ___         XXX           XXX
+)
