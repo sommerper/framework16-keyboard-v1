@@ -14,3 +14,7 @@ There some settings for zmk and qmk to get you started with the correct pin layo
 - Left and Right are for the laptop. They should have a tight fit without having to squeeze them in between the other components. 
 - Bottom is for your desk so you can choose to put the pcb on your desk as well. 
 - Top is for travel protection. It fits on top of the Bottom case with the keyboard inside.
+
+## ⚠️ Disclaimer
+
+These PCB files are provided **as-is**, without any warranty or guarantee of functionality or safety. Use them at your own risk. I am not responsible for any damage, injury, or loss resulting from the use of these files.
