@@ -17,7 +17,7 @@ Any Pro Micro compatible controller should work. The nice!nano v2 is used in the
 - Bottom is for your desk so you can choose to put the pcb on your desk as well. 
 - Top is for travel protection. It fits on top of the Bottom case with the keyboard inside.
 
-![Desktop print](images/framework16keyboardv1_3.jpg)
+![Desktop print](images/framework16keyboardv1_4.jpg)
 
 ## ⚠️ Disclaimer
 
